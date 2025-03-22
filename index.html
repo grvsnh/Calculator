@@ -9,12 +9,26 @@
 	<body>
 		<div class="container">
 			<div class="calculator">
-				<!-- Light/Dark Mode Toggle -->
-				<div class="toggle-container">
-					<label class="switch">
-						<input type="checkbox" id="theme-toggle" />
-						<span class="slider round"></span>
-					</label>
+				<!-- Top bar with dropdown and toggle -->
+				<div class="top-bar">
+					<!-- Dropdown Menu -->
+					<div class="dropdown">
+						<select id="calculator-mode">
+							<option value="simple" selected>
+								Simple Calculator
+							</option>
+							<option value="scientific" disabled>
+								Scientific Calculator (Coming Soon...)
+							</option>
+						</select>
+					</div>
+					<!-- Light/Dark Mode Toggle -->
+					<div class="toggle-container">
+						<label class="switch">
+							<input type="checkbox" id="theme-toggle" />
+							<span class="slider round"></span>
+						</label>
+					</div>
 				</div>
 
 				<!-- Display Screen -->
@@ -26,7 +40,7 @@
 				<!-- Calculator Buttons -->
 				<div class="buttons">
 					<button class="btn clear">AC</button>
-					<button class="btn operator toggle-sign">±</button>
+					<button class="btn operator backspace">←</button>
 					<button class="btn operator percent">%</button>
 					<button class="btn operator">÷</button>
 					<button class="btn number">7</button>
