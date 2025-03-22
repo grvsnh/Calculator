@@ -1,202 +1,411 @@
-document.addEventListener("DOMContentLoaded", function () {
-	// Selecting important elements
-	const display = document.getElementById("result");
-	const history = document.getElementById("history");
-	const buttons = document.querySelectorAll(".btn");
-	const themeToggle = document.getElementById("theme-toggle");
-	const body = document.body;
+/* Reset default styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Segoe UI", Arial, sans-serif;
+}
 
-	let currentInput = ""; // Stores user input
-	let historyText = ""; // Stores calculation history
+/* Base styles and theme transitions */
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+	transition: all 0.5s ease;
+}
 
-	// Function to update display with dynamic font size
-	function updateDisplay(value) {
-		display.textContent = value || "0";
+body.light-mode {
+	background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
 
-		// Dynamically adjust font size based on content length
-		const baseFontSize = 2.5; // Base font size in rem
-		const minFontSize = 1.5; // Minimum font size in rem
-		const length = display.textContent.length;
+/* Calculator container */
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
 
-		// Adjust font size: reduce as length increases
-		let fontSize = baseFontSize;
-		if (length > 10) {
-			fontSize = Math.max(
-				minFontSize,
-				baseFontSize - (length - 10) * 0.1
-			);
-		}
-		display.style.fontSize = `${fontSize}rem`;
+.calculator {
+	background: rgba(20, 20, 20, 0.95);
+	padding: 25px;
+	border-radius: 25px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+		inset 0 2px 4px rgba(255, 255, 255, 0.1);
+	max-width: 360px;
+	width: 100%;
+	backdrop-filter: blur(10px);
+	transition: all 0.5s ease;
+}
+
+body.light-mode .calculator {
+	background: rgba(255, 255, 255, 0.95);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1),
+		inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Top bar styling */
+.top-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+/* Dropdown menu styling */
+.dropdown {
+	position: relative;
+}
+
+#calculator-mode {
+	background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+	color: #ffffff;
+	border: none;
+	padding: 6px 10px;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	appearance: none; /* Remove default arrow */
+	-webkit-appearance: none; /* Ensure removal in WebKit browsers */
+	-moz-appearance: none; /* Ensure removal in Firefox */
+	background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom arrow */
+	background-repeat: no-repeat;
+	background-position: right 6px center;
+	background-size: 16px; /* Ensure arrow size is controlled */
+	padding-right: 24px;
+	width: 150px;
+}
+
+body.light-mode #calculator-mode {
+	background: #ffffff;
+	color: #000000;
+	border: 1px solid #ccc;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Black arrow */
+	background-repeat: no-repeat; /* Ensure no repeat */
+	background-position: right 6px center;
+	background-size: 16px; /* Control arrow size */
+}
+
+#calculator-mode:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+#calculator-mode option {
+	background: #2a2a2a;
+	color: #ffffff;
+}
+
+body.light-mode #calculator-mode option {
+	background: #ffffff;
+	color: #000000;
+}
+
+/* Display styling */
+.display {
+	background: rgba(50, 50, 50, 0.8);
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 15px;
+	text-align: right;
+	margin-bottom: 20px;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+body.light-mode .display {
+	background: rgba(245, 245, 245, 0.9);
+	color: #2d2d2d;
+	box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Result styling with dynamic font size */
+.result {
+	font-size: 2.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: font-size 0.3s ease;
+}
+
+/* History styling with fade effect for overflow */
+.history {
+	font-size: 1.2rem;
+	color: rgba(255, 255, 255, 0.7);
+	margin-bottom: 10px;
+	transition: all 0.3s ease;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+}
+
+body.light-mode .history {
+	color: rgba(45, 45, 45, 0.7);
+}
+
+/* Fade effect for history overflow */
+.history::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 20px;
+	height: 100%;
+	background: linear-gradient(to left, rgba(50, 50, 50, 0.8), transparent);
+	pointer-events: none;
+}
+
+body.light-mode .history::after {
+	background: linear-gradient(to left, rgba(245, 245, 245, 0.9), transparent);
+}
+
+/* Buttons grid */
+.buttons {
+	display: grid;
+	grid-template-columns: repeat(4, 70px);
+	grid-template-rows: repeat(5, 70px);
+	gap: 10px;
+	justify-content: center;
+}
+
+/* Button base styles */
+.btn {
+	width: 100%;
+	height: 100%;
+	font-size: 1.6rem;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn:active {
+	transform: translateY(1px);
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Button color schemes */
+.number {
+	background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+	color: #ffffff;
+}
+
+body.light-mode .number {
+	background: linear-gradient(145deg, #ffffff, #e5e5e5);
+	color: #2d2d2d;
+}
+
+.operator,
+.backspace,
+.percent {
+	background: linear-gradient(145deg, #ff6f00, #e65c00);
+	color: #ffffff;
+}
+
+body.light-mode .operator,
+body.light-mode .backspace,
+body.light-mode .percent {
+	background: linear-gradient(145deg, #ff9500, #e87b00);
+	color: #ffffff;
+}
+
+.clear {
+	background: linear-gradient(145deg, #666, #555);
+	color: #ffffff;
+}
+
+body.light-mode .clear {
+	background: linear-gradient(145deg, #999, #888);
+	color: #ffffff;
+}
+
+.zero {
+	grid-column: span 2;
+	border-radius: 12px;
+}
+
+.equal {
+	background: linear-gradient(145deg, #ff6f00, #e65c00);
+	color: #ffffff;
+}
+
+body.light-mode .equal {
+	background: linear-gradient(145deg, #ff9500, #e87b00);
+	color: #ffffff;
+}
+
+/* Enhanced toggle switch */
+.toggle-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 80px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(90deg, #1a2a44, #2c3e50);
+	transition: all 0.4s ease;
+	border-radius: 34px;
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background: #f0c05a;
+	transition: all 0.4s ease;
+	border-radius: 50%;
+	box-shadow: -10px 0 0 2px #1a2a44, inset -2px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.slider:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: radial-gradient(circle at 65px 5px, #fff 1px, transparent 1px),
+		radial-gradient(circle at 60px 25px, #fff 1px, transparent 1px),
+		radial-gradient(circle at 30px 10px, #fff 1px, transparent 1px);
+	background-size: 80px 34px;
+	opacity: 0.8;
+	transition: opacity 0.4s ease;
+}
+
+input:checked + .slider {
+	background: linear-gradient(90deg, #87ceeb, #f0e68c);
+}
+
+input:checked + .slider:before {
+	transform: translateX(42px);
+	background: #ffeb3b;
+	box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b, 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider:after {
+	background: radial-gradient(circle at 15px 15px, #fff 6px, transparent 7px),
+		radial-gradient(circle at 30px 10px, #fff 5px, transparent 6px),
+		radial-gradient(circle at 45px 15px, #fff 4px, transparent 5px);
+	background-size: 80px 34px;
+	opacity: 0.6;
+}
+
+body.light-mode .slider {
+	background: linear-gradient(90deg, #87ceeb, #f0e68c);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+	.calculator {
+		padding: 15px;
+		max-width: 300px;
 	}
 
-	// Function to update history
-	function updateHistory(value) {
-		history.textContent = value;
+	.display {
+		padding: 15px;
 	}
 
-	// Function to simulate a button click
-	function simulateButtonClick(value) {
-		const button = Array.from(buttons).find(
-			(btn) => btn.textContent === value
-		);
-		if (button) {
-			button.click();
-		}
+	.result {
+		font-size: 2rem;
 	}
 
-	// Event Listener for Button Clicks
-	buttons.forEach((button) => {
-		button.addEventListener("click", () => {
-			const value = button.textContent;
+	.history {
+		font-size: 1rem;
+	}
 
-			// Clear button functionality
-			if (button.classList.contains("clear")) {
-				currentInput = "";
-				historyText = "";
-				updateDisplay("0");
-				updateHistory("");
-			}
-			// Toggle sign (±) functionality
-			else if (button.classList.contains("toggle-sign")) {
-				if (currentInput === "") return;
-				if (currentInput.startsWith("-")) {
-					currentInput = currentInput.slice(1);
-				} else {
-					currentInput = "-" + currentInput;
-				}
-				updateDisplay(currentInput);
-			}
-			// Percent functionality
-			else if (button.classList.contains("percent")) {
-				if (currentInput === "") return;
-				try {
-					let result = eval(currentInput) / 100;
-					if (isNaN(result) || !isFinite(result)) {
-						throw new Error("Math Error");
-					}
-					currentInput = result.toString();
-					updateDisplay(currentInput);
-					updateHistory(historyText);
-				} catch (error) {
-					updateDisplay(error.message);
-					updateHistory(historyText);
-					currentInput = "";
-					setTimeout(() => {
-						updateDisplay("0");
-						updateHistory("");
-					}, 1500);
-				}
-			}
-			// Equal button functionality
-			else if (button.classList.contains("equal")) {
-				if (currentInput !== "") {
-					try {
-						let evalInput = currentInput
-							.replace(/÷/g, "/")
-							.replace(/×/g, "*")
-							.replace(/−/g, "-");
-						let result = eval(evalInput);
-						if (isNaN(result) || !isFinite(result)) {
-							throw new Error("Math Error");
-						}
-						historyText = currentInput;
-						updateDisplay(result.toString());
-						updateHistory(historyText);
-						currentInput = result.toString();
-					} catch (error) {
-						updateDisplay(error.message);
-						updateHistory(historyText);
-						currentInput = "";
-						setTimeout(() => {
-							updateDisplay("0");
-							updateHistory("");
-						}, 1500);
-					}
-				}
-			}
-			// Handle decimal point to prevent multiple decimals
-			else if (value === ".") {
-				const lastNumber = currentInput.split(/[\+\−\*\/÷×]/).pop();
-				if (lastNumber.includes(".")) return;
-				currentInput += value;
-				updateDisplay(currentInput);
-			}
-			// Normal button functionality
-			else {
-				currentInput += value;
-				updateDisplay(currentInput);
-			}
-		});
-	});
+	.buttons {
+		grid-template-columns: repeat(4, 60px);
+		grid-template-rows: repeat(5, 60px);
+		gap: 8px;
+	}
 
-	// Light/Dark Mode Toggle
-	themeToggle.addEventListener("change", () => {
-		body.classList.toggle("light-mode");
-	});
+	.btn {
+		font-size: 1.4rem;
+	}
 
-	// Numpad and Keyboard Support
-	document.addEventListener("keydown", (event) => {
-		const key = event.key;
+	.switch {
+		width: 70px;
+		height: 30px;
+	}
 
-		// Map keyboard and numpad keys to calculator buttons
-		switch (key) {
-			// Numbers (works for both main keyboard and numpad)
-			case "0":
-			case "1":
-			case "2":
-			case "3":
-			case "4":
-			case "5":
-			case "6":
-			case "7":
-			case "8":
-			case "9":
-				simulateButtonClick(key);
-				break;
+	.slider:before {
+		height: 22px;
+		width: 22px;
+		left: 4px;
+		bottom: 4px;
+	}
 
-			// Operators
-			case "+":
-				simulateButtonClick("+");
-				break;
-			case "-":
-				simulateButtonClick("−");
-				break;
-			case "*": // Multiply (both main keyboard and numpad)
-				simulateButtonClick("×");
-				break;
-			case "/": // Divide (both main keyboard and numpad)
-				simulateButtonClick("÷");
-				break;
+	input:checked + .slider:before {
+		transform: translateX(36px);
+	}
 
-			// Decimal point
-			case ".":
-				simulateButtonClick(".");
-				break;
+	.slider:after {
+		background-size: 70px 30px;
+	}
 
-			// Enter key for equals
-			case "Enter":
-				simulateButtonClick("=");
-				break;
+	.slider:after {
+		background: radial-gradient(
+				circle at 55px 5px,
+				#fff 1px,
+				transparent 1px
+			),
+			radial-gradient(circle at 50px 20px, #fff 1px, transparent 1px),
+			radial-gradient(circle at 25px 10px, #fff 1px, transparent 1px);
+	}
 
-			// Escape key for clear (AC)
-			case "Escape":
-				simulateButtonClick("AC");
-				break;
+	input:checked + .slider:after {
+		background: radial-gradient(
+				circle at 10px 15px,
+				#fff 5px,
+				transparent 6px
+			),
+			radial-gradient(circle at 25px 10px, #fff 4px, transparent 5px),
+			radial-gradient(circle at 40px 15px, #fff 3px, transparent 4px);
+	}
 
-			// Percent
-			case "%":
-				simulateButtonClick("%");
-				break;
-
-			// Prevent default behavior for these keys to avoid unwanted actions
-			default:
-				if (
-					["+", "-", "*", "/", ".", "Enter", "Escape", "%"].includes(
-						key
-					)
-				) {
-					event.preventDefault();
-				}
-		}
-	});
-});
+	#calculator-mode {
+		font-size: 0.8rem;
+		padding: 5px 8px;
+		width: 120px;
+	}
+}
