@@ -1,0 +1,346 @@
+/* Reset default styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Base styles and theme transitions */
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+	transition: all 0.5s ease;
+}
+
+body.light-mode {
+	background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+/* Calculator container */
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
+
+.calculator {
+	background: rgba(20, 20, 20, 0.95);
+	padding: 25px;
+	border-radius: 25px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+		inset 0 2px 4px rgba(255, 255, 255, 0.1);
+	max-width: 360px;
+	width: 100%;
+	backdrop-filter: blur(10px);
+	transition: all 0.5s ease;
+}
+
+body.light-mode .calculator {
+	background: rgba(255, 255, 255, 0.95);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1),
+		inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Display styling */
+.display {
+	background: rgba(50, 50, 50, 0.8);
+	color: #ffffff;
+	padding: 20px;
+	border-radius: 15px;
+	text-align: right;
+	margin-bottom: 20px;
+	overflow: hidden; /* Prevent scrollbar */
+	transition: all 0.3s ease;
+	box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+body.light-mode .display {
+	background: rgba(245, 245, 245, 0.9);
+	color: #2d2d2d;
+	box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Result styling with dynamic font size */
+.result {
+	font-size: 2.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: font-size 0.3s ease;
+}
+
+/* History styling with fade effect for overflow */
+.history {
+	font-size: 1.2rem;
+	color: rgba(255, 255, 255, 0.7);
+	margin-bottom: 10px;
+	transition: all 0.3s ease;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+}
+
+body.light-mode .history {
+	color: rgba(45, 45, 45, 0.7);
+}
+
+/* Fade effect for history overflow */
+.history::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 20px;
+	height: 100%;
+	background: linear-gradient(to left, rgba(50, 50, 50, 0.8), transparent);
+	pointer-events: none;
+}
+
+body.light-mode .history::after {
+	background: linear-gradient(to left, rgba(245, 245, 245, 0.9), transparent);
+}
+
+/* Buttons grid */
+.buttons {
+	display: grid;
+	grid-template-columns: repeat(4, 70px);
+	grid-template-rows: repeat(5, 70px);
+	gap: 10px;
+	justify-content: center;
+}
+
+/* Button base styles */
+.btn {
+	width: 100%;
+	height: 100%;
+	font-size: 1.6rem;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn:active {
+	transform: translateY(1px);
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Button color schemes */
+.number {
+	background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+	color: #ffffff;
+}
+
+body.light-mode .number {
+	background: linear-gradient(145deg, #ffffff, #e5e5e5);
+	color: #2d2d2d;
+}
+
+.operator,
+.toggle-sign,
+.percent {
+	background: linear-gradient(145deg, #ff6f00, #e65c00);
+	color: #ffffff;
+}
+
+body.light-mode .operator,
+body.light-mode .toggle-sign,
+body.light-mode .percent {
+	background: linear-gradient(145deg, #ff9500, #e87b00);
+	color: #ffffff;
+}
+
+.clear {
+	background: linear-gradient(145deg, #666, #555);
+	color: #ffffff;
+}
+
+body.light-mode .clear {
+	background: linear-gradient(145deg, #999, #888);
+	color: #ffffff;
+}
+
+.zero {
+	grid-column: span 2;
+	border-radius: 12px;
+}
+
+.equal {
+	background: linear-gradient(145deg, #ff6f00, #e65c00);
+	color: #ffffff;
+}
+
+body.light-mode .equal {
+	background: linear-gradient(145deg, #ff9500, #e87b00);
+	color: #ffffff;
+}
+
+/* Enhanced toggle switch */
+.toggle-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-bottom: 20px;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 80px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(90deg, #1a2a44, #2c3e50);
+	transition: all 0.4s ease;
+	border-radius: 34px;
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background: #f0c05a;
+	transition: all 0.4s ease;
+	border-radius: 50%;
+	box-shadow: -10px 0 0 2px #1a2a44, inset -2px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.slider:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: radial-gradient(circle at 65px 5px, #fff 1px, transparent 1px),
+		radial-gradient(circle at 60px 25px, #fff 1px, transparent 1px),
+		radial-gradient(circle at 30px 10px, #fff 1px, transparent 1px);
+	background-size: 80px 34px;
+	opacity: 0.8;
+	transition: opacity 0.4s ease;
+}
+
+input:checked + .slider {
+	background: linear-gradient(90deg, #87ceeb, #f0e68c);
+}
+
+input:checked + .slider:before {
+	transform: translateX(42px);
+	background: #ffeb3b;
+	box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b, 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider:after {
+	background: radial-gradient(circle at 15px 15px, #fff 6px, transparent 7px),
+		radial-gradient(circle at 30px 10px, #fff 5px, transparent 6px),
+		radial-gradient(circle at 45px 15px, #fff 4px, transparent 5px);
+	background-size: 80px 34px;
+	opacity: 0.6;
+}
+
+body.light-mode .slider {
+	background: linear-gradient(90deg, #87ceeb, #f0e68c);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+	.calculator {
+		padding: 15px;
+		max-width: 300px;
+	}
+
+	.display {
+		padding: 15px;
+	}
+
+	.result {
+		font-size: 2rem;
+	}
+
+	.history {
+		font-size: 1rem;
+	}
+
+	.buttons {
+		grid-template-columns: repeat(4, 60px);
+		grid-template-rows: repeat(5, 60px);
+		gap: 8px;
+	}
+
+	.btn {
+		font-size: 1.4rem;
+	}
+
+	.switch {
+		width: 70px;
+		height: 30px;
+	}
+
+	.slider:before {
+		height: 22px;
+		width: 22px;
+		left: 4px;
+		bottom: 4px;
+	}
+
+	input:checked + .slider:before {
+		transform: translateX(36px);
+	}
+
+	.slider:after {
+		background-size: 70px 30px;
+	}
+
+	.slider:after {
+		background: radial-gradient(
+				circle at 55px 5px,
+				#fff 1px,
+				transparent 1px
+			),
+			radial-gradient(circle at 50px 20px, #fff 1px, transparent 1px),
+			radial-gradient(circle at 25px 10px, #fff 1px, transparent 1px);
+	}
+
+	input:checked + .slider:after {
+		background: radial-gradient(
+				circle at 10px 15px,
+				#fff 5px,
+				transparent 6px
+			),
+			radial-gradient(circle at 25px 10px, #fff 4px, transparent 5px),
+			radial-gradient(circle at 40px 15px, #fff 3px, transparent 4px);
+	}
+}
