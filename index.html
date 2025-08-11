@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Calculator</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="calculator">
+				<!-- Top bar with dropdown and toggle -->
+				<div class="top-bar">
+					<!-- Dropdown Menu -->
+					<div class="dropdown">
+						<select id="calculator-mode">
+							<option value="simple" selected>
+								Simple Calculator
+							</option>
+							<option value="scientific" disabled>
+								Scientific Calculator (Coming Soon...)
+							</option>
+						</select>
+					</div>
+					<!-- Light/Dark Mode Toggle -->
+					<div class="toggle-container">
+						<label class="switch">
+							<input type="checkbox" id="theme-toggle" />
+							<span class="slider round"></span>
+						</label>
+						<!-- Live clock -->
+						<div id="clock" class="clock">--:--:--</div>
+					</div>
+				</div>
+
+				<!-- Display Screen -->
+				<div class="display">
+					<div class="history" id="history"></div>
+					<div class="result" id="result">0</div>
+				</div>
+
+				<!-- Calculator Buttons -->
+				<div class="buttons">
+					<button class="btn clear">AC</button>
+					<button class="btn operator backspace">←</button>
+					<button class="btn operator percent">%</button>
+					<button class="btn operator">÷</button>
+					<button class="btn number">7</button>
+					<button class="btn number">8</button>
+					<button class="btn number">9</button>
+					<button class="btn operator">×</button>
+					<button class="btn number">4</button>
+					<button class="btn number">5</button>
+					<button class="btn number">6</button>
+					<button class="btn operator">−</button>
+					<button class="btn number">1</button>
+					<button class="btn number">2</button>
+					<button class="btn number">3</button>
+					<button class="btn operator">+</button>
+					<button class="btn number zero">0</button>
+					<button class="btn number">.</button>
+					<button class="btn equal">=</button>
+				</div>
+
+				<!-- History toggle button -->
+				<button id="history-toggle" class="history-btn" aria-label="Toggle history">ℋ</button>
+
+				<!-- Slide-out history panel -->
+				<aside id="history-panel" class="history-panel" aria-label="Calculation history">
+					<div class="history-header">
+						<span>History</span>
+						<button id="history-clear" aria-label="Clear history">🗑</button>
+					</div>
+					<ul id="history-list"></ul>
+				</aside>
+			</div>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
