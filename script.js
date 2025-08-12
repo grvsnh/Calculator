@@ -5,8 +5,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	const themeToggle = document.getElementById("theme-toggle");
 	const body = document.body;
 
+	// History panel elements
+	const historyToggle = document.getElementById("history-toggle");
+	const historyPanel = document.getElementById("history-panel");
+	const historyList = document.getElementById("history-list");
+	const historyClearBtn = document.getElementById("history-clear");
+
 	let currentInput = "";
 	let historyText = "";
+
+	// Load stored history on boot
+	let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || [];
+	renderHistory();
 
 	function updateDisplay(value) {
 		display.textContent = value || "0";
@@ -25,6 +35,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function updateHistory(value) {
 		history.textContent = value;
+	}
+
+	function renderHistory() {
+		historyList.innerHTML = "";
+		calcHistory.slice().reverse().forEach((entry, idx) => {
+			const li = document.createElement("li");
+			li.textContent = `${entry.expr} = ${entry.result}`;
+			li.addEventListener("click", () => {
+				currentInput = entry.result.toString();
+				updateDisplay(currentInput);
+			});
+			historyList.appendChild(li);
+		});
 	}
 
 	function simulateButtonClick(value) {
@@ -82,6 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
 						historyText = currentInput;
 						updateDisplay(result.toString());
 						updateHistory(historyText);
+						
+						// Store in history
+						calcHistory.push({ expr: historyText, result });
+						localStorage.setItem("calcHistory", JSON.stringify(calcHistory));
+						renderHistory();
+						
 						currentInput = result.toString();
 					} catch (error) {
 						updateDisplay(error.message);
@@ -107,6 +136,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	themeToggle.addEventListener("change", () => {
 		body.classList.toggle("light-mode");
+	});
+
+	// History panel toggle
+	historyToggle.addEventListener("click", () => {
+		historyPanel.classList.toggle("open");
+		historyToggle.classList.toggle("open");
+	});
+
+	// Clear history
+	historyClearBtn.addEventListener("click", () => {
+		calcHistory = [];
+		localStorage.removeItem("calcHistory");
+		renderHistory();
 	});
 
 	document.addEventListener("keydown", (event) => {
@@ -170,4 +212,20 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 		}
 	});
+
+	/* ---------- Live clock ----------- */
+	function startClock() {
+		const clock = document.getElementById("clock");
+		function update() {
+			const now = new Date();
+			clock.textContent = now.toLocaleTimeString([], {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			});
+		}
+		update(); // initial call
+		setInterval(update, 1000); // tick every second
+	}
+	startClock();
 });

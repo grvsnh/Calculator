@@ -29,6 +29,7 @@ body.light-mode {
 }
 
 .calculator {
+	position: relative;
 	background: rgba(20, 20, 20, 0.95);
 	padding: 25px;
 	border-radius: 25px;
@@ -38,6 +39,7 @@ body.light-mode {
 	width: 100%;
 	backdrop-filter: blur(10px);
 	transition: all 0.5s ease;
+	z-index: index 1;;
 }
 
 body.light-mode .calculator {
@@ -69,13 +71,13 @@ body.light-mode .calculator {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-	appearance: none; /* Remove default arrow */
-	-webkit-appearance: none; /* Ensure removal in WebKit browsers */
-	-moz-appearance: none; /* Ensure removal in Firefox */
-	background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom arrow */
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
 	background-repeat: no-repeat;
 	background-position: right 6px center;
-	background-size: 16px; /* Ensure arrow size is controlled */
+	background-size: 16px;
 	padding-right: 24px;
 	width: 150px;
 }
@@ -85,10 +87,7 @@ body.light-mode #calculator-mode {
 	color: #000000;
 	border: 1px solid #ccc;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Black arrow */
-	background-repeat: no-repeat; /* Ensure no repeat */
-	background-position: right 6px center;
-	background-size: 16px; /* Control arrow size */
+	background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
 }
 
 #calculator-mode:hover {
@@ -334,6 +333,136 @@ body.light-mode .slider {
 	background: linear-gradient(90deg, #87ceeb, #f0e68c);
 }
 
+/* Corner clock */
+.clock {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #ffffff;
+	margin-left: 12px;
+	user-select: none;
+	transition: color 0.4s ease;
+}
+
+body.light-mode .clock {
+	color: #2d2d2d;
+}
+
+/* History toggle button */
+.history-btn {
+	position: absolute;
+	top: 50%;
+	right: -35px;
+	transform: translateY(-50%);
+	width: 35px;
+	height: 90px;
+	border-radius: 6px 6px 0px 0px;
+	border: none;
+	background: linear-gradient(145deg, #ff6f00, #e65c00);
+	color: #fff;
+	font-size: 1.4rem;
+	cursor: pointer;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	transition: right 0.4s ease;
+	z-index: 10;
+}
+
+body.light-mode .history-btn {
+	background: linear-gradient(145deg, #ff9500, #e87b00);
+}
+
+/* Slide-out panel */
+.history-panel {
+	position: absolute;
+	top: 0;
+	right: -1px;
+	width: 240px;
+	height: 100%;
+	padding: 20px 16px 60px;
+	backdrop-filter: blur(10px);
+	background: rgba(20, 20, 20, 0.93);
+	border-radius: 25px 25px 25px 25px;
+	box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);
+	transition: right 0.4s ease;
+	display: none;
+	flex-direction: column;
+	overflow-y: auto;
+	color: #fff;
+	
+}
+
+body.light-mode .history-panel {
+	background: rgba(255, 255, 255, 0.95);
+	box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+	color: #2d2d2d;
+}
+
+.history-panel.open {
+	display: flex;
+	right: -240px;
+}
+
+.history-btn.open {
+	right: -276px;
+}
+
+.history-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+	font-weight: 600;
+	color: inherit;
+}
+
+#history-clear {
+	background: transparent;
+	border: none;
+	font-size: 1.2rem;
+	cursor: pointer;
+	color: inherit;
+	padding: 4px;
+	border-radius: 4px;
+	transition: background 0.2s;
+}
+
+#history-clear:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode #history-clear:hover {
+	background: rgba(0, 0, 0, 0.1);
+}
+
+#history-list {
+	list-style: none;
+}
+
+#history-list li {
+	padding: 8px 4px;
+	margin-bottom: 6px;
+	border-radius: 6px;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.05);
+	transition: background 0.25s;
+	word-break: break-all;
+	color: #fff;
+	font-size: 0.9rem;
+}
+
+body.light-mode #history-list li {
+	color: #2d2d2d;
+	background: rgba(0, 0, 0, 0.05);
+}
+
+#history-list li:hover {
+	background: rgba(255, 255, 255, 0.12);
+}
+
+body.light-mode #history-list li:hover {
+	background: rgba(0, 0, 0, 0.12);
+}
+
+
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
 	.calculator {
@@ -383,29 +512,35 @@ body.light-mode .slider {
 		background-size: 70px 30px;
 	}
 
-	.slider:after {
-		background: radial-gradient(
-				circle at 55px 5px,
-				#fff 1px,
-				transparent 1px
-			),
-			radial-gradient(circle at 50px 20px, #fff 1px, transparent 1px),
-			radial-gradient(circle at 25px 10px, #fff 1px, transparent 1px);
-	}
-
-	input:checked + .slider:after {
-		background: radial-gradient(
-				circle at 10px 15px,
-				#fff 5px,
-				transparent 6px
-			),
-			radial-gradient(circle at 25px 10px, #fff 4px, transparent 5px),
-			radial-gradient(circle at 40px 15px, #fff 3px, transparent 4px);
-	}
-
-	#calculator-mode {
+	.clock {
 		font-size: 0.8rem;
-		padding: 5px 8px;
-		width: 120px;
+		margin-left: 8px;
+	}
+
+	.history-panel {
+		width: 200px;
+		right: -220px;
+		padding: 15px 12px 50px;
+	}
+
+	.history-btn {
+		width: 80px;
+		height: 30px;
+		right: 100px;
+		top: -10px;
+		font-size: 1.2rem;
+	}
+
+	.history-btn.open {
+		right: 100px;
+		top: -25px;
+	}
+
+	#history-list li {
+		font-size: 0.8rem;
+		padding: 6px 4px;
+	}
+	.history-panel.open {
+		right: 100px;
 	}
 }
