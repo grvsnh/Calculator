@@ -28,6 +28,11 @@
 							<input type="checkbox" id="theme-toggle" />
 							<span class="slider round"></span>
 						</label>
+<<<<<<< HEAD
+=======
+						<!-- Live clock -->
+						<div id="clock" class="clock">--:--:--</div>
+>>>>>>> bbk
 					</div>
 				</div>
 
@@ -59,6 +64,18 @@
 					<button class="btn number">.</button>
 					<button class="btn equal">=</button>
 				</div>
+
+				<!-- History toggle button -->
+				<button id="history-toggle" class="history-btn" aria-label="Toggle history">ℋ</button>
+
+				<!-- Slide-out history panel -->
+				<aside id="history-panel" class="history-panel" aria-label="Calculation history">
+					<div class="history-header">
+						<span>History</span>
+						<button id="history-clear" aria-label="Clear history">🗑</button>
+					</div>
+					<ul id="history-list"></ul>
+				</aside>
 			</div>
 		</div>
 		<script src="script.js"></script>
