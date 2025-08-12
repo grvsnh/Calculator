@@ -16,7 +16,7 @@ _Enjoy a seamless experience with **Dark** and **Light** mode support._
 
 ## 🚀 **Live Demo**
 
-🔗 [**Check it out!**](https://gauravsingh-02.github.io/Calculator/)
+🔗 [**Check it out!**](https://grvsnh.github.io/Calculator/)
 
 ---
 
