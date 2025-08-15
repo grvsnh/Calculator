@@ -1,4 +1,4 @@
-# 🧮 **Advanced Calculator**
+# 🧮 **Calculator**
 
 _A **premium**, **responsive** web calculator with beautiful animations and intuitive controls._  
 _Experience seamless calculations with **Dark/Light themes** and **persistent history**._
@@ -155,16 +155,21 @@ We welcome contributions! Here's how you can help:
 ### **Getting Started**
 
 ```
+
 # Fork the repository
+
 git clone https://github.com/grvsnh/Calculator.git
 
 # Navigate to project
+
 cd Calculator
 
 # Open in your browser
+
 open index.html
 
 # Start coding! 🎉
+
 ```
 
 ### **Pull Request Guidelines**
@@ -201,6 +206,22 @@ If you found this project helpful:
 -   💡 **Animation Ideas**: CSS animation community
 -   🧠 **Math Logic**: Standard calculator algorithms
 -   ❤️ **Community**: All contributors and users!
+
+---
+
+## 👥 **Contributors**
+
+Thanks to these amazing people who have contributed to this project:
+
+**Made with [contrib.rocks](https://contrib.rocks)**
+
+### 🏆 **Hall of Fame**
+
+| Contributor                          | Role                        | Contributions                                          |
+| ------------------------------------ | --------------------------- | ------------------------------------------------------ |
+| [@grvsnh](https://github.com/grvsnh) | 👑 **Creator & Maintainer** | Project architecture, UI/UX design, core functionality |
+
+**Want to see your name here?** Check out our [Contributing Guidelines](CONTRIBUTING.md) and make your first contribution! 🚀
 
 ---
 
