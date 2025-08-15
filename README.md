@@ -213,15 +213,9 @@ If you found this project helpful:
 
 Thanks to these amazing people who have contributed to this project:
 
-**Made with [contrib.rocks](https://contrib.rocks)**
-
-### 🏆 **Hall of Fame**
-
-| Contributor                          | Role                        | Contributions                                          |
-| ------------------------------------ | --------------------------- | ------------------------------------------------------ |
-| [@grvsnh](https://github.com/grvsnh) | 👑 **Creator & Maintainer** | Project architecture, UI/UX design, core functionality |
-
-**Want to see your name here?** Check out our [Contributing Guidelines](CONTRIBUTING.md) and make your first contribution! 🚀
+<a href="https://github.com/grvsnh/Calculator/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=grvsnh/Calculator" />
+</a>
 
 ---
 
