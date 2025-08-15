@@ -7,11 +7,13 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
+		<!-- Main container for centering calculator -->
 		<div class="container">
+			<!-- Calculator main body -->
 			<div class="calculator">
-				<!-- Top bar with dropdown and toggle -->
+				<!-- Top navigation bar with dropdown and theme toggle -->
 				<div class="top-bar">
-					<!-- Dropdown Menu -->
+					<!-- Calculator mode selection dropdown -->
 					<div class="dropdown">
 						<select id="calculator-mode">
 							<option value="simple" selected>
@@ -22,57 +24,111 @@
 							</option>
 						</select>
 					</div>
-					<!-- Light/Dark Mode Toggle -->
+
+					<!-- Theme toggle and history button container -->
 					<div class="toggle-container">
-						<label class="switch">
-							<input type="checkbox" id="theme-toggle" />
-							<span class="slider round"></span>
+						<!-- Custom moon/sun theme toggle switch -->
+						<input type="checkbox" id="theme-toggle" />
+						<label for="theme-toggle" class="toggle">
+							<!-- Moon button with craters -->
+							<span class="toggle-button">
+								<span class="crater crater-1"></span>
+								<span class="crater crater-2"></span>
+								<span class="crater crater-3"></span>
+								<span class="crater crater-4"></span>
+								<span class="crater crater-5"></span>
+								<span class="crater crater-6"></span>
+								<span class="crater crater-7"></span>
+							</span>
+							<!-- Stars/clouds elements -->
+							<span class="star star-1"></span>
+							<span class="star star-2"></span>
+							<span class="star star-3"></span>
+							<span class="star star-4"></span>
+							<span class="star star-5"></span>
+							<span class="star star-6"></span>
+							<span class="star star-7"></span>
+							<span class="star star-8"></span>
 						</label>
+
+						<!-- History panel toggle button -->
+						<button
+							id="history-toggle"
+							class="history-btn"
+							aria-label="Toggle history"
+						>
+							📚
+						</button>
 					</div>
 				</div>
 
-				<!-- Display Screen -->
+				<!-- Calculator display screen -->
 				<div class="display">
+					<!-- Previous calculation history display -->
 					<div class="history" id="history"></div>
+					<!-- Current result display -->
 					<div class="result" id="result">0</div>
 				</div>
 
-				<!-- Calculator Buttons -->
+				<!-- Calculator button grid -->
 				<div class="buttons">
+					<!-- Row 1: Clear, Backspace, Percentage, Division -->
 					<button class="btn clear">AC</button>
 					<button class="btn operator backspace">←</button>
 					<button class="btn operator percent">%</button>
 					<button class="btn operator">÷</button>
+
+					<!-- Row 2: Numbers 7, 8, 9, Multiplication -->
 					<button class="btn number">7</button>
 					<button class="btn number">8</button>
 					<button class="btn number">9</button>
 					<button class="btn operator">×</button>
+
+					<!-- Row 3: Numbers 4, 5, 6, Subtraction -->
 					<button class="btn number">4</button>
 					<button class="btn number">5</button>
 					<button class="btn number">6</button>
 					<button class="btn operator">−</button>
+
+					<!-- Row 4: Numbers 1, 2, 3, Addition -->
 					<button class="btn number">1</button>
 					<button class="btn number">2</button>
 					<button class="btn number">3</button>
 					<button class="btn operator">+</button>
+
+					<!-- Row 5: Zero (spans 2 columns), Decimal, Equals -->
 					<button class="btn number zero">0</button>
 					<button class="btn number">.</button>
 					<button class="btn equal">=</button>
 				</div>
 
-				<!-- History toggle button -->
-				<button id="history-toggle" class="history-btn" aria-label="Toggle history">ℋ</button>
-
 				<!-- Slide-out history panel -->
-				<aside id="history-panel" class="history-panel" aria-label="Calculation history">
+				<aside
+					id="history-panel"
+					class="history-panel"
+					aria-label="Calculation history"
+				>
+					<!-- History panel header with title and clear button -->
 					<div class="history-header">
-						<span>History</span>
-						<button id="history-clear" aria-label="Clear history">🗑</button>
+						<span
+							>📚 History
+							<span class="keyboard-hint">(Press H)</span></span
+						>
+						<button
+							id="history-clear"
+							aria-label="Clear history"
+							title="Clear all history"
+						>
+							🧹
+						</button>
 					</div>
+					<!-- History calculations list -->
 					<ul id="history-list"></ul>
 				</aside>
 			</div>
 		</div>
+
+		<!-- JavaScript functionality -->
 		<script src="script.js"></script>
 	</body>
 </html>
