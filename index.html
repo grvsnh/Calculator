@@ -19,12 +19,12 @@
 							<option value="simple" selected>
 								Simple Calculator
 							</option>
+							<option value="bmi">BMI Calculator</option>
 							<option value="scientific" disabled>
 								Scientific Calculator (Coming Soon...)
 							</option>
 						</select>
 					</div>
-
 					<!-- Theme toggle and history button container -->
 					<div class="toggle-container">
 						<!-- Custom moon/sun theme toggle switch -->
@@ -50,56 +50,90 @@
 							<span class="star star-7"></span>
 							<span class="star star-8"></span>
 						</label>
-
 						<!-- History panel toggle button -->
 						<button
 							id="history-toggle"
 							class="history-btn"
 							aria-label="Toggle history"
+							title="History"
 						>
 							📚
 						</button>
 					</div>
 				</div>
 
-				<!-- Calculator display screen -->
-				<div class="display">
-					<!-- Previous calculation history display -->
-					<div class="history" id="history"></div>
-					<!-- Current result display -->
-					<div class="result" id="result">0</div>
+				<!-- Simple Calculator Content -->
+				<div id="simple-calculator-content">
+					<!-- Calculator display screen -->
+					<div class="display">
+						<!-- Previous calculation history display -->
+						<div class="history" id="history"></div>
+						<!-- Current result display -->
+						<div class="result" id="result">0</div>
+					</div>
+					<!-- Calculator button grid -->
+					<div class="buttons">
+						<!-- Row 1: Clear, Backspace, Percentage, Division -->
+						<button class="btn clear">AC</button>
+						<button class="btn operator backspace">←</button>
+						<button class="btn operator percent">%</button>
+						<button class="btn operator">÷</button>
+						<!-- Row 2: Numbers 7, 8, 9, Multiplication -->
+						<button class="btn number">7</button>
+						<button class="btn number">8</button>
+						<button class="btn number">9</button>
+						<button class="btn operator">×</button>
+						<!-- Row 3: Numbers 4, 5, 6, Subtraction -->
+						<button class="btn number">4</button>
+						<button class="btn number">5</button>
+						<button class="btn number">6</button>
+						<button class="btn operator">−</button>
+						<!-- Row 4: Numbers 1, 2, 3, Addition -->
+						<button class="btn number">1</button>
+						<button class="btn number">2</button>
+						<button class="btn number">3</button>
+						<button class="btn operator">+</button>
+						<!-- Row 5: Zero (spans 2 columns), Decimal, Equals -->
+						<button class="btn number zero">0</button>
+						<button class="btn number">.</button>
+						<button class="btn equal">=</button>
+					</div>
 				</div>
 
-				<!-- Calculator button grid -->
-				<div class="buttons">
-					<!-- Row 1: Clear, Backspace, Percentage, Division -->
-					<button class="btn clear">AC</button>
-					<button class="btn operator backspace">←</button>
-					<button class="btn operator percent">%</button>
-					<button class="btn operator">÷</button>
-
-					<!-- Row 2: Numbers 7, 8, 9, Multiplication -->
-					<button class="btn number">7</button>
-					<button class="btn number">8</button>
-					<button class="btn number">9</button>
-					<button class="btn operator">×</button>
-
-					<!-- Row 3: Numbers 4, 5, 6, Subtraction -->
-					<button class="btn number">4</button>
-					<button class="btn number">5</button>
-					<button class="btn number">6</button>
-					<button class="btn operator">−</button>
-
-					<!-- Row 4: Numbers 1, 2, 3, Addition -->
-					<button class="btn number">1</button>
-					<button class="btn number">2</button>
-					<button class="btn number">3</button>
-					<button class="btn operator">+</button>
-
-					<!-- Row 5: Zero (spans 2 columns), Decimal, Equals -->
-					<button class="btn number zero">0</button>
-					<button class="btn number">.</button>
-					<button class="btn equal">=</button>
+				<!-- BMI Calculator Content -->
+				<div id="bmi-calculator-content" class="bmi-hidden">
+					<!-- BMI display screen -->
+					<div class="display bmi-display-area">
+						<!-- BMI input area -->
+						<div class="bmi-inputs">
+							<input
+								type="number"
+								id="bmi-weight"
+								placeholder="Weight (kg)"
+								min="1"
+								step="0.1"
+							/>
+							<input
+								type="number"
+								id="bmi-height"
+								placeholder="Height (cm)"
+								min="1"
+								step="0.1"
+							/>
+						</div>
+						<!-- BMI result display -->
+						<div class="bmi-result" id="bmi-result">—</div>
+						<div class="bmi-status" id="bmi-status"></div>
+					</div>
+					<!-- BMI calculate button -->
+					<div class="bmi-button-container">
+						<button
+							id="bmi-calculate"
+							class="btn equal bmi-calculate-btn"
+						>
+							Calculate BMI
+						</button>
+					</div>
 				</div>
 
 				<!-- Slide-out history panel -->
@@ -127,7 +161,6 @@
 				</aside>
 			</div>
 		</div>
-
 		<!-- JavaScript functionality -->
 		<script src="script.js"></script>
 	</body>
